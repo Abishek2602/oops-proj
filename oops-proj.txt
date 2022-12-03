@@ -1,0 +1,193 @@
+import java.io.*;
+import java.util.*;
+
+class Student {
+    String name;
+    int id;
+    String dept;
+    Student(String name, int id, String dept)
+    {
+        this.name = name;
+        this.id = id;
+        this.dept = dept;
+        oops.updateRegNo();
+    }
+}
+
+class Department {
+    String name;
+    private List<Student> students;
+    Department(String name, List<Student> students)
+    {
+        this.name = name;
+        this.students = students;
+    }
+    public List<Student> getStudents()
+    {
+        return students;
+    }
+}
+
+class Institute {
+    String instituteName;
+    private List<Department> departments;
+    private List<Student> students;
+
+    Institute(String instituteName,List<Department> departments)
+    {
+        this.instituteName = instituteName;
+        this.departments = departments;
+    }
+
+    public int getTotalStudentsInInstitute()
+    {
+        int noOfStudents = 0;
+
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\nRegister No. "+s.id);
+                noOfStudents++;
+            }
+        }
+        return noOfStudents;
+    }
+
+    public int getTotalStudentsInCSE()
+    {
+        int cseStudents = 0;
+        String cse_dept = "CSE";
+
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                if(s.dept == "CSE" || s.dept == "cse"){
+                    //System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\nRegister No. "+s.id);
+                    cseStudents++;
+                }
+            }
+        }
+        return cseStudents;
+    }
+
+    public int getTotalStudentsInECE()
+    {
+        int eceStudents = 0;
+
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                if(s.dept=="ECE" || s.dept=="ece"){
+                    //System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\nRegister No. "+s.id);
+                    eceStudents++;
+                }
+            }
+        }
+        return eceStudents;
+    }
+
+    public int getTotalStudentsInEEE()
+    {
+        int eeeStudents = 0;
+
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                if(s.dept=="EEE" || s.dept == "eee"){
+                    //System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\nRegister No. "+s.id);
+                    eeeStudents++;
+                }
+            }
+        }
+        return eeeStudents;
+    }
+
+    public int getTotalStudentsInIT()
+    {
+        int itStudents = 0;
+
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                if(s.dept=="IT" || s.dept == "it"){
+                    //System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\nRegister No. "+s.id);
+                    itStudents++;
+                }
+            }
+        }
+        return itStudents;
+    }
+
+    public void getStudentDetails(int id)
+    {
+        for (Department dept : departments) {
+            students = dept.getStudents();
+            for (Student s : students) {
+                if(s.id == id){
+                    System.out.println("\nName : "+s.name+"\nDepartment : "+s.dept+"\n");
+                }
+            }
+        }
+    }
+}
+class oops {
+    static int reg_no = 1;
+
+    public static void updateRegNo(){
+        reg_no++;
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        int choice = 1;
+
+        Student s1 = new Student("Haris", reg_no, "CSE");
+        Student s2 = new Student("Mano", reg_no, "CSE");
+        Student s3 = new Student("Siva", reg_no, "ECE");
+        Student s4 = new Student("Abishek", reg_no, "IT");
+        Student s5 = new Student("Sabarish", reg_no, "EEE");
+
+        List<Student> cse_students = new ArrayList<Student>();
+        List<Student> ece_students = new ArrayList<Student>();
+        List<Student> eee_students = new ArrayList<Student>();
+        List<Student> it_students = new ArrayList<Student>();
+
+        cse_students.add(s1);
+        cse_students.add(s2);
+        ece_students.add(s3);
+        it_students.add(s4);
+        eee_students.add(s5);
+
+        Department CSE = new Department("CSE", cse_students);
+        Department ECE = new Department("ECE", ece_students);
+        Department EEE = new Department("EEE", eee_students);
+        Department IT = new Department("IT", it_students);
+
+        List<Department> departments = new ArrayList<Department>();
+        departments.add(CSE);
+        departments.add(ECE);
+        departments.add(IT);
+        departments.add(EEE);
+
+        Institute institute = new Institute("TCE", departments);
+
+        int totalStudents = institute.getTotalStudentsInInstitute();
+        System.out.print("\nTotal students in "+institute.instituteName+" : "+totalStudents+"\n");
+        System.out.println("\n");
+
+        System.out.print("Total students in CSE Department : "+institute.getTotalStudentsInCSE()+"\n");
+        System.out.print("Total students in ECE Department : "+institute.getTotalStudentsInECE()+"\n");
+        System.out.print("Total students in EEE Department : "+institute.getTotalStudentsInEEE()+"\n");
+        System.out.print("Total students in IT Department : "+institute.getTotalStudentsInIT()+"\n");
+        System.out.println("\n");
+
+        while(choice == 1){
+            System.out.print("Enter Student register no. you want to know : ");
+            int studentID = in.nextInt();
+            institute.getStudentDetails(studentID);
+            System.out.println("Enter 1 to continue : ");
+            choice = in.nextInt();
+        }
+    }
+}
